@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "smartreader-339508",
+  "private_key_id": "8922f71d2408368a1866247951dabf6f97725e43",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQC5BsKx9Qm280+d\nnkXd/Sgp5oASR1+dnh8zwbExWMHZCj+/KcRsHJNes5MdQSLtXsdbijhCiS6kPHg6\n/6nd3PcaXr0nyh6XZyTkEPdZ+Zde4649p4EqgcFxDljAFsQkDTgArJFfIzu2Jx97\njou7ZkzmrqUKuM3TWqSZk5r/w8tY82xtFacUTL3KBe2enWEVqbCMvNPoBXi4c2Rj\nroviHL5sP6FoWvUFU5kSI7MBCVaCVOqo451SJ7/FKi+A7I/9jmR1FTZ87JA41PDb\nGPTzKEXHx6usuZCIS2B1oLiJhWgJ8nnFjwG9+M785LesQc7PrQOzUPHelF+BKqAT\nddFpsmIDAgMBAAECggEAJmRLOL619dK1pehl6eJyF4Oe9mv94IgjREt/91PJ4T2Z\nrZI+kgo53/AV6f+Ofj9o0Us0UkYBug1cCy3qcsE7OqsGx79OKq85veLxWCeMa6GF\nkYB0sju7RjiqXK08pJhjkuw7u8hlRu4GP857mvZmpYT+dOOUvbK0rbMteb2IL5v0\ng70F+Kg/IpkF0MJLRxg0cmtKdgNDi7fpZ/zmIARUpaw32VYG26SjL3d787jusxZc\ntihXQWbPMBOluyCxNYLODu5GDFdAIR9Uqry3dCnBvGEcusQ/QQgu05DaSo50n+a5\nveDzH5ZJI9ti4hTxtVN0d55/ckB3ixn5GFNPdcVTXQKBgQDcTRQUyC3i6bMzc8ht\nE3PmD3W4MMawmNUKQcQokFAiftozRTA63NiDrcsbqUi4oyyuSDqcIhmo2FpYaRfM\nrf5881PsiHP1ijMZhEtN22Yz71I6VTDtNPTUf7OnCoDRM5mL1UeXn1s8Rd1fLMMq\n8+A4MeUGe02q2GJLs7glzYU8xQKBgQDXAlrniUpMie3yKw5B8uCCnGHySMqKu8mE\nUCoSp0SxzXhz/bmg8ounQDUFkBSvE/PR2j6OkD5Foi5NIkV3KrOKNk4fptQk8Jak\n1o5bgDeoBjU1LXV98Snp88RjjwZC4x+VfnJC9i4JWeqwSE0fjnrqt44kqPX3brSK\nSO96P2+gJwKBgDw7+vSfsyQq3+t+iduBCRxrN7Wv6HOapg1S5A5vPunfo0uHbGN7\nxNtkJneetpp9Sxcv+o58KGXpGfK4cWBuZnnFkjnHKWWGbuhYKrrT9ULX+bSnXGRP\nKW38qKNQlN4ebKo2G4gSc0CsnZWLSKWy3qiew88c4aSH24B1WDFF21s9AoGBALQh\nuvskIGVDYWB0BfvmeYWzcrPDnDzi2w/JAZajIIA9/l5fAbf/vFShDErezRVpB+qW\nh7Z0zlcUauogfkY6NjTjDkyiPjW8gtkTEC1EnFxe5xDoRvj+pPjmS3CFkN9U3U8n\nop7LFQKsnFyYFlULz5r5sVKxY3CrBQKd3FR09RYdAoGAWAhU3Ty1ZCz9npNW7qtR\nTFxL0WbPtmnnPmZ4xkBZ08tT3VXj+br9UJLZvHvh4iVatv/D8c1Ax9wwg2Tpv5K2\nZuuYT2G3uARvp6A/pQwgU6bL4Eqt8o9gl+RlnTUVMhoBiSPkHkljX7Lv6aZgnk+d\ndRJbemOBaS+rNmVbeJKBjqs=\n-----END PRIVATE KEY-----\n",
+  "client_email": "smart-reader-admin@smartreader-339508.iam.gserviceaccount.com",
+  "client_id": "106713005785175158106",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/smart-reader-admin%40smartreader-339508.iam.gserviceaccount.com"
+}
