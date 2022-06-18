@@ -31,7 +31,7 @@ export class AuthController {
   @ApiTags('Auth')
   @ApiOperation({ summary: 'Register new user' })
   @Public()
-  @UseGuards(UserExistGuard)
+  // @UseGuards(UserExistGuard)
   @Post('/register')
   async addUser(@Body() registerDto: RegisterDto) {
     console.log(registerDto, 'registerDto');
