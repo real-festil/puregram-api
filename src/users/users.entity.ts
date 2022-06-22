@@ -1,3 +1,4 @@
+import { Post } from 'src/posts/posts.entity';
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity('users')
@@ -19,4 +20,7 @@ export class User {
 
   @Column({ type: 'boolean' })
   isVerified?: boolean;
+
+  @OneToMany(() => Post, (post) => post.user)
+  posts: Post[];
 }

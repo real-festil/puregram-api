@@ -13,7 +13,7 @@ async function bootstrap() {
 
   initializeApp({
     credential: applicationDefault(),
-    storageBucket: 'gs://smartreader-339508.appspot.com',
+    storageBucket: 'gs://puregram-2ade0.appspot.com',
   });
 
   app.setGlobalPrefix('api');
