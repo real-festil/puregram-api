@@ -21,7 +21,6 @@ export class PostService {
     let res = await this.postsRepository.find();
     res = await Promise.all(
       res.map(async (post) => {
-        console.log('post.userId', this.userService);
         const user = await this.userService.getSingleUser(post.userId);
         return { ...post, username: user.username };
       }),

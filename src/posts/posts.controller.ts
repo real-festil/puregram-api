@@ -46,6 +46,7 @@ export class PostController {
     @UploadedFile() image: Express.Multer.File,
     @Body() body: AddPostDto,
   ) {
+    console.log('Add post: ', body.label, '\n', image);
     return await this.postService.addPost(image, body.label);
   }
 
