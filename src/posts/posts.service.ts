@@ -52,19 +52,21 @@ export class PostService {
     const bucket = admin.storage().bucket();
     console.log('file', file);
 
+    const filename = uuid() + file.originalname;
+
     // Uploads a local file to the bucket
     await bucket
-      .file(uuid() + file.originalname)
+      .file(filename)
       .save(file.buffer)
       .then((res) => console.log(res));
-    const bucketFile = bucket.file(file.originalname);
+    const bucketFile = bucket.file(filename);
 
     const urls = await bucketFile.getSignedUrl({
       action: 'read',
       expires: '03-09-2491',
     });
 
-    console.log(`${file.originalname} uploaded.`);
+    console.log(`${filename} uploaded.`);
 
     return urls[0];
   }
