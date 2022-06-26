@@ -25,7 +25,9 @@ export class PostService {
         return { ...post, username: user.username };
       }),
     );
-    return res;
+    return res.sort(
+      (a, b) => +new Date(b.created_at) - +new Date(a.created_at),
+    );
   }
 
   async getSinglePost(postId: string) {
