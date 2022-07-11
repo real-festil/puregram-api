@@ -83,6 +83,6 @@ export class PostService {
     const userPosts = await this.postsRepository.find({
       where: { userId: userId },
     });
-    return { ...userPosts, username: user.username };
+    return userPosts.map((post) => ({ ...post, username: user.username }));
   }
 }
