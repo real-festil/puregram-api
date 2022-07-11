@@ -79,6 +79,10 @@ export class PostService {
   }
 
   async getPostsByUser(userId: string) {
-    return await this.postsRepository.find({ where: { userId: userId } });
+    const user = await this.userService.getSingleUser(userId);
+    const userPosts = await this.postsRepository.find({
+      where: { userId: userId },
+    });
+    return { ...userPosts, username: user.username };
   }
 }
