@@ -34,7 +34,7 @@ export class SubscriptionService {
       userSubscribers.map(async (subscription) => {
         const user = await this.getSingleUser(subscription.subscribedUserId);
         user['password'] = null;
-        return { ...subscription, subscribedUser: user };
+        return { ...subscription, user: user };
       }),
     );
     return res;
