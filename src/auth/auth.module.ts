@@ -11,10 +11,11 @@ import { APP_GUARD } from '@nestjs/core';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from '../users/users.entity';
 import { UserService } from 'src/users/users.service';
+import { Subscription } from 'src/subscriptions/subscriptions.entity';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([User]),
+    TypeOrmModule.forFeature([User, Subscription]),
     PassportModule,
     JwtModule.register({
       secret: jwtConstants.secret,

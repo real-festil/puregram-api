@@ -7,12 +7,14 @@ import { config } from './orm.config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { PostsModule } from './posts/post.module';
+import { SubscriptionModule } from './subscriptions/subscriptions.module';
 
 @Module({
   imports: [
     AuthModule,
     UsersModule,
     PostsModule,
+    SubscriptionModule,
     TypeOrmModule.forRoot(config),
     ConfigModule.forRoot(),
   ],

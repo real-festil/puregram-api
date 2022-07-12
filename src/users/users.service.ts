@@ -1,15 +1,18 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Scope } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from './users.entity';
 import * as bcrypt from 'bcryptjs';
 import { UpdateUserDto } from './users.dto';
+import { Subscription } from 'src/subscriptions/subscriptions.entity';
 
-@Injectable()
+@Injectable({ scope: Scope.REQUEST })
 export class UserService {
   constructor(
     @InjectRepository(User)
     private usersRepository: Repository<User>,
+    @InjectRepository(Subscription)
+    private subscriptionRepository: Repository<Subscription>,
   ) {}
 
   async addUser(
@@ -34,7 +37,16 @@ export class UserService {
   }
 
   async getSingleUser(userId: string) {
-    return await this.usersRepository.findOne(userId);
+    const user = await this.usersRepository.findOne(userId);
+    const userSubscribersCount = await this.getUserSubscribersCount(userId);
+    const usersBySubscribersIdCount = await this.getUsersBySubscriberIdCount(
+      userId,
+    );
+    return {
+      ...user,
+      subscriberCount: userSubscribersCount,
+      subscribedCount: usersBySubscribersIdCount,
+    };
   }
 
   async updateUser(
@@ -57,5 +69,17 @@ export class UserService {
   async deleteUser(userId: string) {
     this.usersRepository.delete({ id: userId });
     return userId;
+  }
+
+  async getUserSubscribersCount(userId: string) {
+    return await this.subscriptionRepository.count({
+      where: { userId: userId },
+    });
+  }
+
+  async getUsersBySubscriberIdCount(userId: string) {
+    return await this.subscriptionRepository.count({
+      where: { subscribedUserId: userId },
+    });
   }
 }

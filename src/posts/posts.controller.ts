@@ -32,7 +32,7 @@ export class PostController {
   }
 
   @ApiTags('Posts')
-  @ApiOperation({ summary: 'Get single post' })
+  @ApiOperation({ summary: 'Get posts by user' })
   @Get('user/:userId')
   async getPostsByUserId(@Param('userId') userId: string) {
     return await this.postService.getPostsByUser(userId);

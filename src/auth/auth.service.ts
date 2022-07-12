@@ -12,9 +12,6 @@ import {
 } from './auth.dto';
 import { UserService } from '../users/users.service';
 import fetch from 'node-fetch';
-// const fetch = (...args) =>
-//   //@ts-ignore
-//   import('node-fetch').then(({ default: fetch }) => fetch(...args));
 import { init, send } from '@emailjs/browser';
 init('user_wyoRsMx8pxobKSQKtM8j7');
 
