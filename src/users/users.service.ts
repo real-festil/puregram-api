@@ -1,10 +1,13 @@
-import { Injectable, Scope } from '@nestjs/common';
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+import { Inject, Injectable, Scope } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from './users.entity';
 import * as bcrypt from 'bcryptjs';
 import { UpdateUserDto } from './users.dto';
 import { Subscription } from 'src/subscriptions/subscriptions.entity';
+import { REQUEST } from '@nestjs/core';
+import { Request } from 'express';
 
 @Injectable({ scope: Scope.REQUEST })
 export class UserService {
@@ -13,6 +16,7 @@ export class UserService {
     private usersRepository: Repository<User>,
     @InjectRepository(Subscription)
     private subscriptionRepository: Repository<Subscription>,
+    @Inject(REQUEST) private readonly request: Request,
   ) {}
 
   async addUser(
@@ -42,6 +46,20 @@ export class UserService {
     const usersBySubscribersIdCount = await this.getUsersBySubscriberIdCount(
       userId,
     );
+    //@ts-ignore
+    if (userId !== this.request.user.id) {
+      const isSubscribed = await this.getIsUserSubscribed(
+        userId,
+        //@ts-ignore
+        this.request.user.id,
+      );
+      return {
+        ...user,
+        subscriberCount: userSubscribersCount,
+        subscribedCount: usersBySubscribersIdCount,
+        isSubscribed: !!isSubscribed,
+      };
+    }
     return {
       ...user,
       subscriberCount: userSubscribersCount,
@@ -80,6 +98,12 @@ export class UserService {
   async getUsersBySubscriberIdCount(userId: string) {
     return await this.subscriptionRepository.count({
       where: { subscribedUserId: userId },
+    });
+  }
+
+  async getIsUserSubscribed(userId: string, subscribedUserId: string) {
+    return await this.subscriptionRepository.findOne({
+      where: { userId: userId, subscribedUserId: subscribedUserId },
     });
   }
 }
