@@ -22,7 +22,7 @@ export class PostService {
     res = await Promise.all(
       res.map(async (post) => {
         const user = await this.userService.getSingleUser(post.userId);
-        return { ...post, username: user.username };
+        return { ...post, username: user.username, avatarUrl: user.avatarUrl };
       }),
     );
     return res.sort(
