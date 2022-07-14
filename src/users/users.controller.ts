@@ -6,11 +6,16 @@ import {
   Patch,
   Delete,
   UseGuards,
+  Post,
+  UploadedFile,
+  UseInterceptors,
 } from '@nestjs/common';
 import { UserService } from './users.service';
 import { UpdateUserDto } from './users.dto';
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
 import { UserNotExistsGuard } from './users.guard';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { AddPostDto } from 'src/posts/posts.dto';
 
 @Controller('users')
 export class UserController {
@@ -48,5 +53,13 @@ export class UserController {
   @Delete(':id')
   async deleteUser(@Param('id') userId: string) {
     return await this.userService.deleteUser(userId);
+  }
+
+  @ApiTags('Users')
+  @ApiOperation({ summary: 'Update user avatar' })
+  @Post('/avatar')
+  @UseInterceptors(FileInterceptor('image'))
+  async updateUserAvatar(@UploadedFile() image: Express.Multer.File) {
+    return await this.userService.updateUserAvatar(image);
   }
 }

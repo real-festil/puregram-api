@@ -7,7 +7,9 @@ import * as bcrypt from 'bcryptjs';
 import { UpdateUserDto } from './users.dto';
 import { Subscription } from 'src/subscriptions/subscriptions.entity';
 import { REQUEST } from '@nestjs/core';
+import admin from 'firebase-admin';
 import { Request } from 'express';
+import { uuid } from 'uuidv4';
 
 @Injectable({ scope: Scope.REQUEST })
 export class UserService {
@@ -32,6 +34,8 @@ export class UserService {
       password: hashedPassword,
       appleId,
       isVerified: false,
+      avatarUrl:
+        'https://i.pinimg.com/474x/3f/de/86/3fde8620893d9a399a8f9214c76cdc9a.jpg',
     });
     return res;
   }
@@ -105,5 +109,41 @@ export class UserService {
     return await this.subscriptionRepository.findOne({
       where: { userId: userId, subscribedUserId: subscribedUserId },
     });
+  }
+
+  async updateUserAvatar(image) {
+    if (!this.request.user) {
+      return null;
+    }
+    //@ts-ignore
+    const user = await this.usersRepository.findOne(this.request.user.id);
+    const url = await this.uploadFile(image);
+    return await this.usersRepository.save({
+      ...user,
+      avatarUrl: url,
+    });
+  }
+
+  async uploadFile(file) {
+    const bucket = admin.storage().bucket();
+    console.log('file', file);
+
+    const filename = uuid() + file.originalname;
+
+    // Uploads a local file to the bucket
+    await bucket
+      .file(filename)
+      .save(file.buffer)
+      .then((res) => console.log(res));
+    const bucketFile = bucket.file(filename);
+
+    const urls = await bucketFile.getSignedUrl({
+      action: 'read',
+      expires: '03-09-2491',
+    });
+
+    console.log(`${filename} uploaded.`);
+
+    return urls[0];
   }
 }

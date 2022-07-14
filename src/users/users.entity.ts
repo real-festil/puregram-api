@@ -23,6 +23,9 @@ export class User {
   @Column({ type: 'varchar', length: 200 })
   password: string;
 
+  @Column({ type: 'varchar', length: 1000 })
+  avatarUrl: string;
+
   @Column({ type: 'varchar', length: 200, nullable: true })
   appleId?: string;
 
