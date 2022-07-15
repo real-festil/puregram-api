@@ -81,7 +81,7 @@ export class PostService {
       userId: this.request.user.id,
       imageUrl: url,
       label: label,
-      likesCount: 69,
+      likesCount: 0,
     });
   }
 
@@ -115,9 +115,31 @@ export class PostService {
 
   async getPostsByUser(userId: string) {
     const user = await this.userService.getSingleUser(userId);
-    const userPosts = await this.postsRepository.find({
+    let userPosts = await this.postsRepository.find({
       where: { userId: userId },
     });
-    return userPosts.map((post) => ({ ...post, username: user.username }));
+    userPosts = await Promise.all(
+      userPosts.map(async (post) => {
+        const likesCount = await this.likesRepository.findAndCount({
+          postId: post.id,
+        });
+        const isPostLikedByUser = await this.likesRepository.findOne({
+          postId: post.id,
+          //@ts-ignore
+          userId: this.request.user.id,
+        });
+        console.log('isPostLikedByUser', isPostLikedByUser);
+        return {
+          ...post,
+          username: user.username,
+          avatarUrl: user.avatarUrl,
+          likesCount: likesCount[1],
+          isPostLikedByUser: !!isPostLikedByUser,
+        };
+      }),
+    );
+    return userPosts.sort(
+      (a, b) => +new Date(b.created_at) - +new Date(a.created_at),
+    );
   }
 }
