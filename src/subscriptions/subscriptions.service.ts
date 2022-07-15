@@ -26,6 +26,15 @@ export class SubscriptionService {
     });
   }
 
+  async unsubscribeFromUser(userId: string) {
+    return await this.subscriptionRepository.delete({
+      userId,
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      //@ts-ignore
+      subscribedUserId: this.request.user.id,
+    });
+  }
+
   async getUserSubscribers(userId: string) {
     const userSubscribers = await this.subscriptionRepository.find({
       where: { userId: userId },

@@ -1,4 +1,4 @@
-import { Controller, Get, Param, Post } from '@nestjs/common';
+import { Controller, Delete, Get, Param, Post } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { SubscriptionService } from './subscriptions.service';
 
@@ -11,6 +11,13 @@ export class SubscriptionController {
   @Post(':id')
   async subscribeToUser(@Param('id') userId: string) {
     return await this.subscriptionService.subscribeToUser(userId);
+  }
+
+  @ApiTags('Subscriptions')
+  @ApiOperation({ summary: 'Unsubscribe from user' })
+  @Delete(':id')
+  async unsubscribeFromUser(@Param('id') userId: string) {
+    return await this.subscriptionService.unsubscribeFromUser(userId);
   }
 
   @ApiTags('Subscriptions')
