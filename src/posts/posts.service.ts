@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { Inject, Injectable, Scope } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UserService } from 'src/users/users.service';
@@ -7,12 +8,15 @@ import admin from 'firebase-admin';
 import { uuid } from 'uuidv4';
 import { REQUEST } from '@nestjs/core';
 import { Request } from 'express';
+import { Like } from 'src/likes/likes.entity';
 
 @Injectable({ scope: Scope.REQUEST })
 export class PostService {
   constructor(
     @InjectRepository(Post)
     private postsRepository: Repository<Post>,
+    @InjectRepository(Like)
+    private likesRepository: Repository<Like>,
     private userService: UserService,
     @Inject(REQUEST) private readonly request: Request,
   ) {}
@@ -22,7 +26,22 @@ export class PostService {
     res = await Promise.all(
       res.map(async (post) => {
         const user = await this.userService.getSingleUser(post.userId);
-        return { ...post, username: user.username, avatarUrl: user.avatarUrl };
+        const likesCount = await this.likesRepository.findAndCount({
+          postId: post.id,
+        });
+        const isPostLikedByUser = await this.likesRepository.findOne({
+          postId: post.id,
+          //@ts-ignore
+          userId: this.request.user.id,
+        });
+        console.log('isPostLikedByUser', isPostLikedByUser);
+        return {
+          ...post,
+          username: user.username,
+          avatarUrl: user.avatarUrl,
+          likesCount: likesCount[1],
+          isPostLikedByUser: !!isPostLikedByUser,
+        };
       }),
     );
     return res.sort(
@@ -31,7 +50,23 @@ export class PostService {
   }
 
   async getSinglePost(postId: string) {
-    return await this.postsRepository.findOne(postId);
+    const post = await this.postsRepository.findOne(postId);
+    const user = await this.userService.getSingleUser(post.userId);
+    const likesCount = await this.likesRepository.findAndCount({
+      postId,
+    });
+    const isPostLikedByUser = await this.likesRepository.find({
+      postId,
+      //@ts-ignore
+      userId: this.request.user.id,
+    });
+    return {
+      ...post,
+      username: user.username,
+      avatarUrl: user.avatarUrl,
+      likesCount: likesCount[1],
+      isPostLikedByUser: !!isPostLikedByUser,
+    };
   }
 
   async addPost(image: Express.Multer.File, label: string) {

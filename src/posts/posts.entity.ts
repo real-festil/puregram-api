@@ -1,9 +1,11 @@
+import { Like } from 'src/likes/likes.entity';
 import { User } from 'src/users/users.entity';
 import {
   Column,
   CreateDateColumn,
   Entity,
   JoinColumn,
+  ManyToMany,
   ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
@@ -29,6 +31,10 @@ export class Post {
 
   @Column({ type: 'varchar', length: 10000 })
   imageUrl: string;
+
+  @ManyToMany(() => Like, (like) => like.postId)
+  @JoinColumn({ name: 'likeId' })
+  like: Like;
 
   @CreateDateColumn()
   created_at: Date;
