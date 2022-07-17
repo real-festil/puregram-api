@@ -40,7 +40,7 @@ export class PostController {
 
   @ApiTags('Posts')
   @ApiOperation({ summary: 'Add new post' })
-  @Post()
+  @Post('/create')
   @UseInterceptors(FileInterceptor('image'))
   async addPost(
     @UploadedFile() image: Express.Multer.File,
