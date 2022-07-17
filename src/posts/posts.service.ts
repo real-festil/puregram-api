@@ -40,13 +40,16 @@ export class PostService {
           //@ts-ignore
           userId: this.request.user.id,
         });
-        console.log('isPostLikedByUser', isPostLikedByUser);
+        const commentsCount = await this.commentsRepository.findAndCount({
+          postId: post.id,
+        });
         return {
           ...post,
           username: user.username,
           avatarUrl: user.avatarUrl,
           likesCount: likesCount[1],
           isPostLikedByUser: !!isPostLikedByUser,
+          commentsCount: commentsCount[1],
         };
       }),
     );
@@ -66,12 +69,16 @@ export class PostService {
       //@ts-ignore
       userId: this.request.user.id,
     });
+    const commentsCount = await this.commentsRepository.findAndCount({
+      postId,
+    });
     return {
       ...post,
       username: user.username,
       avatarUrl: user.avatarUrl,
       likesCount: likesCount[1],
       isPostLikedByUser: !!isPostLikedByUser,
+      commentsCount: commentsCount[1],
     };
   }
 
