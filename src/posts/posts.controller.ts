@@ -56,4 +56,11 @@ export class PostController {
   async deletePost(@Param('id') postId: string) {
     return await this.postService.deletePost(postId);
   }
+
+  @ApiTags('Posts')
+  @ApiOperation({ summary: 'Get post comments' })
+  @Get('/comments/:id')
+  async getPostComments(@Param('id') postId: string) {
+    return await this.postService.getPostComments(postId);
+  }
 }

@@ -9,6 +9,8 @@ import { uuid } from 'uuidv4';
 import { REQUEST } from '@nestjs/core';
 import { Request } from 'express';
 import { Like } from 'src/likes/likes.entity';
+import { Comment } from 'src/comments/comments.entity';
+import { User } from 'src/users/users.entity';
 
 @Injectable({ scope: Scope.REQUEST })
 export class PostService {
@@ -17,6 +19,10 @@ export class PostService {
     private postsRepository: Repository<Post>,
     @InjectRepository(Like)
     private likesRepository: Repository<Like>,
+    @InjectRepository(Comment)
+    private commentsRepository: Repository<Comment>,
+    @InjectRepository(User)
+    private usersRepository: Repository<User>,
     private userService: UserService,
     @Inject(REQUEST) private readonly request: Request,
   ) {}
@@ -139,6 +145,26 @@ export class PostService {
       }),
     );
     return userPosts.sort(
+      (a, b) => +new Date(b.created_at) - +new Date(a.created_at),
+    );
+  }
+
+  async getPostComments(postId: string) {
+    let comments = await this.commentsRepository.find({ postId });
+
+    comments = await Promise.all(
+      comments.map(async (comment) => {
+        const user = await this.usersRepository.findOne({
+          id: comment.userId,
+        });
+        return {
+          ...comment,
+          username: user.username,
+          avatarUrl: user.avatarUrl,
+        };
+      }),
+    );
+    return comments.sort(
       (a, b) => +new Date(b.created_at) - +new Date(a.created_at),
     );
   }

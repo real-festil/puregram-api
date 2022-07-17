@@ -1,5 +1,6 @@
 import { Like } from 'src/likes/likes.entity';
 import { User } from 'src/users/users.entity';
+import { Comment } from 'src/comments/comments.entity';
 import {
   Column,
   CreateDateColumn,
@@ -35,6 +36,10 @@ export class Post {
   @ManyToMany(() => Like, (like) => like.postId)
   @JoinColumn({ name: 'likeId' })
   like: Like;
+
+  @ManyToMany(() => Like, (like) => like.postId)
+  @JoinColumn({ name: 'likeId' })
+  comments: Comment;
 
   @CreateDateColumn()
   created_at: Date;

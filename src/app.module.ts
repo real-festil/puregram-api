@@ -9,6 +9,7 @@ import { ConfigModule } from '@nestjs/config';
 import { PostsModule } from './posts/post.module';
 import { SubscriptionModule } from './subscriptions/subscriptions.module';
 import { LikeModule } from './likes/likes.module';
+import { CommentModule } from './comments/comments.module';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { LikeModule } from './likes/likes.module';
     PostsModule,
     SubscriptionModule,
     LikeModule,
+    CommentModule,
     TypeOrmModule.forRoot(config),
     ConfigModule.forRoot(),
   ],
