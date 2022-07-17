@@ -30,7 +30,7 @@ export class PostService {
   async getPosts(cursor: number) {
     let [res] = await this.postsRepository.findAndCount({
       order: { created_at: 'DESC' },
-      take: 2,
+      take: 5,
       skip: cursor,
     });
     res = await Promise.all(
