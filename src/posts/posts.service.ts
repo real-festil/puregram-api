@@ -27,8 +27,12 @@ export class PostService {
     @Inject(REQUEST) private readonly request: Request,
   ) {}
 
-  async getPosts() {
-    let res = await this.postsRepository.find();
+  async getPosts(cursor: number) {
+    let [res] = await this.postsRepository.findAndCount({
+      order: { created_at: 'DESC' },
+      take: 2,
+      skip: cursor,
+    });
     res = await Promise.all(
       res.map(async (post) => {
         const user = await this.userService.getSingleUser(post.userId);
@@ -53,9 +57,7 @@ export class PostService {
         };
       }),
     );
-    return res.sort(
-      (a, b) => +new Date(b.created_at) - +new Date(a.created_at),
-    );
+    return res;
   }
 
   async getSinglePost(postId: string) {

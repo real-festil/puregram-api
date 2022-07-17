@@ -20,8 +20,8 @@ export class PostController {
   @ApiTags('Posts')
   @ApiOperation({ summary: 'Get all posts' })
   @Get()
-  async getAllPosts() {
-    return await this.postService.getPosts();
+  async getAllPosts(@Body() body: { cursor: number }) {
+    return await this.postService.getPosts(body.cursor);
   }
 
   @ApiTags('Posts')
