@@ -24,7 +24,7 @@ export class Post {
   @JoinColumn({ name: 'userId' })
   user: User;
 
-  @Column({ type: 'varchar', length: 250 })
+  @Column({ type: 'varchar', length: 1000 })
   label: string;
 
   @Column({ type: 'int' })
